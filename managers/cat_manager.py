@@ -10,13 +10,18 @@ class CatManager:
         cat = CatModel(**cat_data)
         db.session.add(cat)
         db.session.commit()
-        cat_photos_urls = []
         for photo in base64_photos:
-            cat_photos_urls.append(CatPhotoManager.add_cat_photo(photo))
-        cat["photos_urls"] = cat_photos_urls
+            CatPhotoManager.add_cat_photo(photo, cat.id)
         return cat
 
     @staticmethod
     def select_all_cats():
         cats = CatModel.query.all()
         return cats
+    
+    @staticmethod
+    def select_cat_details(cat_id):
+        cat_details = CatModel.query.filter_by(id=cat_id).first()
+        photos_urls = CatPhotoManager.select_cat_photos_urls(cat_details.id)
+        cat_details.photos_urls = photos_urls
+        return cat_details

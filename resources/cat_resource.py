@@ -13,6 +13,9 @@ class CatResource(Resource):
     @validate_schema(CatRequestSchema)
     def post(self):
         req_body = request.get_json()
+        current_user = auth.current_user()
+        print(current_user)
+        req_body["owner_id"] = current_user.id
         cat = CatManager.add_cat(req_body)
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cat)
@@ -23,3 +26,10 @@ class CatsResource(Resource):
         cats = CatManager.select_all_cats()
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cats, many=True)
+
+
+class CatDetailsResource(Resource):
+    def get(self, cat_id):
+        cat = CatManager.select_cat_details(cat_id)
+        resp_schema = CatResponseSchema()
+        return resp_schema.dump(cat), 200

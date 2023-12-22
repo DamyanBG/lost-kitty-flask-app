@@ -19,7 +19,7 @@ class UserManager:
                 raise BadRequest("Please login")
             else:
                 # To find better error description, this is database error, not back end sever error
-                InternalServerError("Server error")
+                raise InternalServerError("Server error")
         return user
 
     @staticmethod
