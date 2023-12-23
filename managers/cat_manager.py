@@ -17,6 +17,8 @@ class CatManager:
     @staticmethod
     def select_all_cats():
         cats = CatModel.query.all()
+        for cat in cats:
+            cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         return cats
     
     @staticmethod
