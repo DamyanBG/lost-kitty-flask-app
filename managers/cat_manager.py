@@ -1,6 +1,7 @@
 from managers.cat_photo_manager import CatPhotoManager
 from models.cat_model import CatModel
 from db import db
+from utils.enums import CatStatus
 
 
 class CatManager:
@@ -17,6 +18,20 @@ class CatManager:
     @staticmethod
     def select_all_cats():
         cats = CatModel.query.all()
+        for cat in cats:
+            cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
+        return cats
+    
+    @staticmethod
+    def select_lost_cats():
+        cats = CatModel.query.filter_by(status=CatStatus.lost).all()
+        for cat in cats:
+            cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
+        return cats
+    
+    @staticmethod
+    def select_found_cats():
+        cats = CatModel.query.filter_by(status=CatStatus.found).all()
         for cat in cats:
             cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         return cats
