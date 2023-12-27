@@ -4,6 +4,7 @@ from managers.auth_manager import AuthManager, auth
 from managers.user_manager import UserManager
 from schemas.response.user_response import UserResponseSchema, UserInfoResponseSchema
 
+
 class UserResource(Resource):
     @auth.login_required
     def get(self):

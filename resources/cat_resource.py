@@ -26,7 +26,8 @@ class LostCatsResource(Resource):
         cats = CatManager.select_lost_cats()
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cats, many=True)
-    
+
+
 class FoundCatsResource(Resource):
     def get(self):
         cats = CatManager.select_found_cats()
@@ -39,4 +40,3 @@ class CatDetailsResource(Resource):
         cat = CatManager.select_cat_details(cat_id)
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cat), 200
-    

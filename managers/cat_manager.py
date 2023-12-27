@@ -22,28 +22,28 @@ class CatManager:
         for cat in cats:
             cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         return cats
-    
+
     @staticmethod
     def select_lost_cats():
         cats = CatModel.query.filter_by(status=CatStatus.lost).all()
         for cat in cats:
             cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         return cats
-    
+
     @staticmethod
     def select_found_cats():
         cats = CatModel.query.filter_by(status=CatStatus.found).all()
         for cat in cats:
             cat.photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         return cats
-    
+
     @staticmethod
     def select_cat_details(cat_id):
         cat_details = CatModel.query.filter_by(id=cat_id).first()
         photos_urls = CatPhotoManager.select_cat_photos_urls(cat_details.id)
         cat_details.photos_urls = photos_urls
         return cat_details
-    
+
     @staticmethod
     def select_by_microchip(microchip):
         cat = CatModel.query.filter_by(microchip=microchip).first()
