@@ -39,3 +39,4 @@ class CatDetailsResource(Resource):
         cat = CatManager.select_cat_details(cat_id)
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cat), 200
+    

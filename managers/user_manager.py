@@ -103,3 +103,8 @@ class UserManager:
         user = UserModel.query.filter_by(id=user_id).first()
         user_names = f"{user.first_name} {user.last_name}"
         return user_names
+    
+    @staticmethod
+    def select_by_id(user_id):
+        user = UserModel.query.filter_by(id=user_id).first()
+        return user
