@@ -1,7 +1,6 @@
 from werkzeug.exceptions import NotFound
 
 from managers.cat_photo_manager import CatPhotoManager
-from managers.user_manager import UserManager
 from models.cat_model import CatModel
 from db import db
 from utils.enums import CatStatus
@@ -53,12 +52,6 @@ class CatManager:
             return None
         photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         cat.photos_urls = photos_urls
-        contact_person = UserManager.select_by_id(cat.owner_id)
-        cat.contact_info = {
-            "person": f"{contact_person.first_name} {contact_person.last_name}",
-            "email": contact_person.email,
-            "phone_number": contact_person.phone_number,
-        }
         return cat
 
     @staticmethod
@@ -68,12 +61,6 @@ class CatManager:
             return None
         photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
         cat.photos_urls = photos_urls
-        contact_person = UserManager.select_by_id(cat.owner_id)
-        cat.contact_info = {
-            "person": f"{contact_person.first_name} {contact_person.last_name}",
-            "email": contact_person.email,
-            "phone_number": contact_person.phone_number,
-        }
         return cat
 
     @staticmethod
