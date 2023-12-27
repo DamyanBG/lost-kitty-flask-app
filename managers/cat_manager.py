@@ -1,3 +1,5 @@
+from werkzeug.exceptions import NotFound
+
 from managers.cat_photo_manager import CatPhotoManager
 from managers.user_manager import UserManager
 from models.cat_model import CatModel
@@ -73,3 +75,19 @@ class CatManager:
             "phone_number": contact_person.phone_number,
         }
         return cat
+
+    @staticmethod
+    def delete_cat(cat_id):
+        cat = CatModel.query.filter_by(id=cat_id).first()
+        if not cat:
+            raise NotFound("This cat does not exists.")
+        
+        CatPhotoManager.delete_cat_photos(cat.id)
+        
+        db.session.delete(cat)
+        db.session.commit()
+
+    @staticmethod
+    def is_owner(cat_id, owner_id):
+        cat = CatModel.query.filter_by(id=cat_id, owner_id=owner_id).first()
+        return bool(cat)
