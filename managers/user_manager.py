@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from db import db
 from models.user_models import UserModel
+from managers.cat_manager import CatManager
 
 
 class UserManager:
@@ -108,3 +109,13 @@ class UserManager:
     def select_by_id(user_id):
         user = UserModel.query.filter_by(id=user_id).first()
         return user
+
+    @staticmethod
+    def delete_user(user_id):
+        user = UserModel.query.filter_by(id=user_id).first()
+        user_cats = CatManager.select_user_cats(user.id)
+        for cat in user_cats:
+            CatManager.delete_cat(cat.id)
+
+        db.session.delete(user)
+        db.session.commit()

@@ -81,9 +81,9 @@ class CatManager:
         cat = CatModel.query.filter_by(id=cat_id).first()
         if not cat:
             raise NotFound("This cat does not exists.")
-        
+
         CatPhotoManager.delete_cat_photos(cat.id)
-        
+
         db.session.delete(cat)
         db.session.commit()
 
@@ -91,3 +91,8 @@ class CatManager:
     def is_owner(cat_id, owner_id):
         cat = CatModel.query.filter_by(id=cat_id, owner_id=owner_id).first()
         return bool(cat)
+
+    @staticmethod
+    def select_user_cats(owner_id):
+        cats = CatModel.query.filter_by(owner_id=owner_id).all()
+        return cats

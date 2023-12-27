@@ -12,10 +12,15 @@ def check_is_authorized(ownership_database_func, kwargs_key):
             print(kwargs)
             current_user = auth.current_user()
             is_owner = ownership_database_func(kwargs[kwargs_key], current_user.id)
-            if not is_owner and not (current_user.role == RoleType.admin or current_user.role == RoleType.moderator):
+            if not is_owner and not (
+                current_user.role == RoleType.admin
+                or current_user.role == RoleType.moderator
+            ):
                 raise Forbidden("You do not have access to this resource.")
             return func(*args, **kwargs)
+
         return decorated_func
+
     return wrapper
 
 

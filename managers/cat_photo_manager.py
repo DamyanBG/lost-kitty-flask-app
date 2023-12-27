@@ -18,7 +18,7 @@ class CatPhotoManager:
         cat_photos = CatPhotoModel.query.filter_by(cat_id=cat_id).all()
         cat_photos_urls = [cat_photo.photo_url for cat_photo in cat_photos]
         return cat_photos_urls
-    
+
     @staticmethod
     def delete_cat_photos(cat_id):
         cat_photos = CatPhotoModel.query.filter_by(cat_id=cat_id).all()

@@ -40,7 +40,6 @@ class CatDetailsResource(Resource):
         cat = CatManager.select_cat_details(cat_id)
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cat), 200
-    
 
     @auth.login_required
     @check_is_authorized(CatManager.is_owner, "cat_id")
