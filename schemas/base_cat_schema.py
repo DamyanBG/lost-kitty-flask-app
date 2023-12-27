@@ -8,3 +8,4 @@ class BaseCatSchema(Schema):
     microchip = fields.String(validate=validate.Length(min=2, max=255))
     passport_id = fields.String(validate=validate.Length(min=2, max=255))
     status = fields.Enum(CatStatus, required=True)
+    area = fields.String(max=255)

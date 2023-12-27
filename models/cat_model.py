@@ -12,3 +12,4 @@ class CatModel(db.Model):
     passport_id = db.Column(db.String(255))
     status = db.Column(db.Enum(CatStatus), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    area = db.Column(db.String(255))
