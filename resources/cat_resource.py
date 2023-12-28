@@ -26,11 +26,25 @@ class LostCatsResource(Resource):
         cats = CatManager.select_lost_cats()
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cats, many=True)
+    
+
+class PaginatedLostCats(Resource):
+    def get(self, offset, limit):
+        cats = CatManager.select_paginated_lost(offset, limit)
+        resp_schema = CatResponseSchema()
+        return resp_schema.dump(cats, many=True)
 
 
 class FoundCatsResource(Resource):
     def get(self):
         cats = CatManager.select_found_cats()
+        resp_schema = CatResponseSchema()
+        return resp_schema.dump(cats, many=True)
+    
+
+class PaginatedFoundCats(Resource):
+    def get(self, offset, limit):
+        cats = CatManager.select_paginated_found(offset, limit)
         resp_schema = CatResponseSchema()
         return resp_schema.dump(cats, many=True)
 
@@ -46,3 +60,14 @@ class CatDetailsResource(Resource):
     def delete(self, cat_id):
         CatManager.delete_cat(cat_id)
         return {"message": "Succes"}, 204
+
+
+class TotalFoundCats(Resource):
+    def get(self):
+        total = CatManager.select_total_found_cats()
+        return total, 200
+    
+class TotalLostCats(Resource):
+    def get(self):
+        total = CatManager.select_total_lost_cats()
+        return total, 200

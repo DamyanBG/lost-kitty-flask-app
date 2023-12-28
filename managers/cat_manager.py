@@ -83,3 +83,31 @@ class CatManager:
     def select_user_cats(owner_id):
         cats = CatModel.query.filter_by(owner_id=owner_id).all()
         return cats
+
+    @staticmethod
+    def select_total_found_cats():
+        total = CatModel.query.filter_by(status=CatStatus.found).count()
+        return total
+    
+    @staticmethod
+    def select_total_lost_cats():
+        total = CatModel.query.filter_by(status=CatStatus.lost).count()
+        return total
+    
+    @staticmethod
+    def select_paginated_found(offset, limit):
+        cats = CatModel.query.filter_by(status=CatStatus.found).offset(offset).limit(limit).all()
+        for cat in cats:
+            photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
+            cat.photos_urls = photos_urls
+        
+        return cats
+    
+    @staticmethod
+    def select_paginated_lost(offset, limit):
+        cats = CatModel.query.filter_by(status=CatStatus.lost).offset(offset).limit(limit).all()
+        for cat in cats:
+            photos_urls = CatPhotoManager.select_cat_photos_urls(cat.id)
+            cat.photos_urls = photos_urls
+        
+        return cats
